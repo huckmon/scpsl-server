@@ -1,29 +1,33 @@
 FROM steamcmd/steamcmd:ubuntu-24
 
-ENV STEAMAPPDIR "${HOMEDIR}/${STEAMAPP}-dedicated"
+#COPY ./scripts/setup-user.sh .
 
-RUN apt-get update \
-    && mkdir /home/data \
+RUN apt-get update -y \
     && add-apt-repository multiverse; apt update \
     && apt-get install -y \
-        lib32gcc-s1 \
-        unzip \
-        libicu-dev \
+    lib32gcc-s1 \
+    libicu-dev \
+    && mkdir ${HOME}/data
+#    && /bin/sh setup-user.sh
 
-RUN steamcmd +force_install_dir "/home/data" +login anonymous +app_update 996560 +app_update 996560 validate +quit
+#ENV username=scpserver
+ENV STEAMAPPDIR="${HOME}/data"
+ENV CONFIGDIR="${HOME}/.config/SCP Secret Laboratory"
+#ENV USERHOME="/home${username}"
 
-USER ${USER}
+RUN steamcmd +force_install_dir "${STEAMAPPDIR}" +login anonymous +app_update 996560 +app_update 996560 validate +quit
 
-RUN cd /home/data
+#USER ${username}
 
 EXPOSE 7777
 
-VOLUME [ "/root/.config/SCP Secret Laboratory"]
+VOLUME [ "${CONFIGDIR}"]
 
-VOLUME [ "/data" ]
+VOLUME [ "${STEAMAPPDIR}" ]
 
-WORKDIR /home/data
+WORKDIR ${HOME}
 
+#COPY --chown=${username}:${username} --chmod=744 ./scripts/start ${USERHOME}
 COPY ./scripts/start /
 
 ENTRYPOINT [ "/start" ]
