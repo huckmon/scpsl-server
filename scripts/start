@@ -1,0 +1,12 @@
+#!/bin/sh
+
+export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+"/home/data/LocalAdmin" 7777 
+
+#expect "Do you accept the EULA? [yes/no] " { send -- "yes"}
+sleep 1
+echo "yes" > /dev/pts/0
+sleep 1
+echo "keep"
+sleep 1
+echo "this"
