@@ -1,4 +1,7 @@
 #!/bin/sh
 
 #export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-${HOME}/data/LocalAdmin 7777
+/root/data/LocalAdmin 7777
+echo yes
+echo keep
+echo this

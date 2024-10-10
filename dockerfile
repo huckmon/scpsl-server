@@ -7,8 +7,8 @@ RUN apt-get update -y \
     libicu-dev \
     && mkdir ${HOME}/data
 
-ENV STEAMAPPDIR="${HOME}/data"
-ENV CONFIGDIR="${HOME}/.config/SCP Secret Laboratory"
+ENV STEAMAPPDIR="/root/data"
+ENV CONFIGDIR="/root/.config/SCP Secret Laboratory"
 
 RUN steamcmd +force_install_dir "${STEAMAPPDIR}" +login anonymous +app_update 996560 +app_update 996560 validate +quit
 
@@ -18,7 +18,7 @@ VOLUME [ "${CONFIGDIR}"]
 
 VOLUME [ "${STEAMAPPDIR}" ]
 
-WORKDIR ${HOME}
+WORKDIR /root/data
 
 COPY ./scripts/start /
 
